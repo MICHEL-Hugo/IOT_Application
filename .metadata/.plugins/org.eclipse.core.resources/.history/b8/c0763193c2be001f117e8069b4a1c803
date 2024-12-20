@@ -1,0 +1,5 @@
+package fr.insa.iotapp.insideTemperatureMS.model;
+
+public class TemperatureData {
+
+}
