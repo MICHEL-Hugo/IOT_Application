@@ -1,6 +1,5 @@
 package fr.insa.iotapp.insideTemperatureMS.controller;
 
-import fr.insa.iotapp.insideTemperatureMS.model.TemperatureData;
 import fr.insa.iotapp.insideTemperatureMS.model.TemperatureDataLoader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +16,14 @@ public class InsideTemperatureController {
     }
 
     @GetMapping("/current")
-    public TemperatureData getCurrentTemperature() {
+    public int getCurrentTemperature() {
         Integer temperature = dataLoader.getNextTemperature();
         if (temperature != null) {
-            return new TemperatureData(temperature);
+            return temperature; 
         }
-        return new TemperatureData(273); 
+        return -273; 
     }
 }
+
+
+
