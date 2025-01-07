@@ -36,3 +36,4 @@ replay_pid*
 *.swp
 .DS_Store
 Thumbs.db
+decisionMS/src/main/resources/logs.txt
