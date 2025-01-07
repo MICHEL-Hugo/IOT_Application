@@ -32,8 +32,8 @@ public class DecisionService {
         }
 
         try {
-            ResponseEntity<Integer> response1 = restTemplate.getForEntity("http://localhost:8080/temperature/current", Integer.class);
-            ResponseEntity<Integer> response2 = restTemplate.getForEntity("http://localhost:8081/temperature/current", Integer.class);
+            ResponseEntity<Integer> response1 = restTemplate.getForEntity("http://outsideTemperatureMS/temperature/current", Integer.class);
+            ResponseEntity<Integer> response2 = restTemplate.getForEntity("http://insideTemperatureMS/temperature/current", Integer.class);
 
             int temp1 = response1.getBody();
             int temp2 = response2.getBody();
@@ -43,7 +43,7 @@ public class DecisionService {
             int newState = (temp1 >= 18 && temp1 <= 27 && temp1 < temp2) ? 1 : 0;
 
             if (newState != previousState) {
-                restTemplate.postForEntity("http://localhost:8082/actuator/state/" + newState, null, String.class);
+                restTemplate.postForEntity("http://windowActuatorMS/actuator/state/" + newState, null, String.class);
                 previousState = newState;
                 String stateMessage = "Window " + (newState == 1 ? "open." : "close.");
                 System.out.println(stateMessage);
