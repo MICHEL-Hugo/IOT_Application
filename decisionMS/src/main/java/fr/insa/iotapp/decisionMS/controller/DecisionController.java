@@ -1,3 +1,22 @@
+/**
+ * Ce fichier définit le contrôleur REST pour le microservice de décision
+ * dans l'application IoT. Le contrôleur gère les requêtes HTTP liées
+ * à la surveillance et à l'accès aux logs.
+ * 
+ * Fonctionnalités principales :
+ * - Démarrage et arrêt de la surveillance via les points d'entrée `/start` et `/stop`.
+ * - Récupération des logs de surveillance via le point d'entrée `/logs`.
+ * 
+ * Le contrôleur repose sur le service `DecisionService` pour implémenter la logique
+ * métier associée aux actions de surveillance. 
+ * 
+ * Structure :
+ * - Annotation `@RestController` : indique que cette classe est un contrôleur Spring.
+ * - Annotation `@RequestMapping("/decision")` : définit la base des URL pour ce contrôleur.
+ * 
+ * Auteur : MICHEL Hugo et MASSON Alexandre
+ */
+
 package fr.insa.iotapp.decisionMS.controller;
 
 import fr.insa.iotapp.decisionMS.service.DecisionService;

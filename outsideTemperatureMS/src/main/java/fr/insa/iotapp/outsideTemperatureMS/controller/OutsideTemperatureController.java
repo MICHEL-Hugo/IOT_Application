@@ -1,3 +1,26 @@
+
+/**
+ * Ce fichier définit le contrôleur REST pour le microservice de gestion
+ * de la température EXTERIEUR dans l'application IoT. Ce contrôleur gère
+ * les requêtes HTTP liées à la récupération de la température actuelle.
+ * 
+ * Fonctionnalités principales :
+ * - Fournir la température exterieure actuelle via le point d'entrée `/current`.
+ * 
+ * Le contrôleur utilise le modèle `TemperatureDataLoader` pour charger les
+ * données de température depuis une source externe ou simulée.
+ * 
+ * Structure :
+ * - Annotation `@RestController` : indique que cette classe est un contrôleur Spring.
+ * - Annotation `@RequestMapping("/temperature")` : définit la base des URL pour ce contrôleur.
+ * 
+ * Remarques :
+ * - Si aucune donnée de température n'est disponible, une valeur par défaut de -273 
+ *   (approximativement le zéro absolu) est renvoyée.
+ * 
+ * Auteur : MICHEL Hugo et MASSON Alexandre
+ */
+
 package fr.insa.iotapp.outsideTemperatureMS.controller;
 
 import fr.insa.iotapp.outsideTemperatureMS.model.TemperatureDataLoader;

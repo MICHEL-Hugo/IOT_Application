@@ -1,3 +1,29 @@
+/**
+ * DecisionService
+ * 
+ * Cette classe est responsable de surveiller les températures internes et externes
+ * afin de prendre des décisions automatisées concernant l'état d'ouverture ou de 
+ * fermeture d'une fenêtre connectée. Elle utilise un mécanisme de planification
+ * périodique pour interroger les données de capteurs et effectuer les actions
+ * nécessaires via des requêtes HTTP.
+ *
+ * Fonctionnalités principales :
+ * - Récupération des températures depuis deux services externes via HTTP.
+ * - Décision de l'etat de la fenetre basée sur des règles simples : Si la température
+ *   extérieure est inférieure à la température intérieure et qu'elle se situe entre 18 et 27°,
+ *   les fenêtres doivent s'ouvrir automatiquement.
+ * - Journalisation des changements d'état dans un fichier de logs avec horodatage.
+ * - Activation/désactivation de la surveillance via des méthodes publiques.
+ *
+ * Points techniques :
+ * - Planification automatique avec l'annotation @Scheduled.
+ * - Utilisation de RestTemplate pour interagir avec les services REST.
+ * - Synchronisation via AtomicBoolean pour contrôler l'état de surveillance.
+ * - Écriture des logs dans un fichier texte situé dans src/main/resources/logs.txt.
+ *
+ * Auteur : Hugo Michel et MASSON Alexandre
+ */
+
 package fr.insa.iotapp.decisionMS.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +74,6 @@ public class DecisionService {
                 String stateMessage = "Window " + (newState == 1 ? "open." : "close.");
                 System.out.println(stateMessage);
 
-                // Log the state change to a file
                 logStateChange(temp1, temp2, newState, stateMessage);
             }
 
