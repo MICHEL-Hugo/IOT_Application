@@ -10,12 +10,6 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @EnableConfigServer
 public class ConfigurationApplication {
-
-    @Bean
-    @LoadBalanced // Permet de résoudre les noms des services enregistrés sur Eureka
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ConfigurationApplication.class, args);
