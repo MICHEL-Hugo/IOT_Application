@@ -138,3 +138,72 @@ Pour exécuter cette application, vous aurez besoin des éléments suivants :
 3. **Arrêter la surveillance** :
    - Envoyez une requête POST à `/decision/stop` pour arrêter la surveillance.
 
+
+
+## Répertoire des API
+
+### 1. **Service de Décision (`/decision`)**
+
+- **Démarrer la surveillance**
+  - **Méthode** : `POST`
+  - **URL** : `/decision/start`
+  - **Description** : Démarre la surveillance des données de température.
+  
+- **Arrêter la surveillance**
+  - **Méthode** : `POST`
+  - **URL** : `/decision/stop`
+  - **Description** : Arrête la surveillance des données de température.
+
+- **Récupérer tous les logs**
+  - **Méthode** : `GET`
+  - **URL** : `/decision/logs`
+  - **Description** : Récupère tous les logs d'actions effectuées par le système.
+  
+- **Récupérer un log par ID**
+  - **Méthode** : `GET`
+  - **URL** : `/decision/logs/{id}`
+  - **Description** : Récupère un log spécifique par son identifiant.
+
+- **Ajouter un log**
+  - **Méthode** : `POST`
+  - **URL** : `/decision/logs`
+  - **Description** : Ajoute un nouveau log dans la base de données.
+  
+- **Mettre à jour un log**
+  - **Méthode** : `PUT`
+  - **URL** : `/decision/logs/{id}`
+  - **Description** : Met à jour un log existant dans la base de données.
+  
+- **Supprimer un log**
+  - **Méthode** : `DELETE`
+  - **URL** : `/decision/logs/{id}`
+  - **Description** : Supprime un log spécifique de la base de données.
+
+### 2. **Service Actionneur de Fenêtre (`/actuator`)**
+
+- **Récupérer l'état de la fenêtre**
+  - **Méthode** : `GET`
+  - **URL** : `/actuator/state`
+  - **Description** : Récupère l'état actuel de la fenêtre (ouverte ou fermée).
+  
+- **Mettre à jour l'état de la fenêtre**
+  - **Méthode** : `POST`
+  - **URL** : `/actuator/state/{state}`
+  - **Description** : Met à jour l'état de la fenêtre à la valeur spécifiée (0 pour fermée, 1 pour ouverte).
+
+### 3. **Service Température Extérieure (`/temperature`)**
+
+- **Récupérer la température extérieure actuelle**
+  - **Méthode** : `GET`
+  - **URL** : `/temperature/current`
+  - **Description** : Récupère la température extérieure actuelle.
+
+
+### 4. **Service Température Intérieure (`/temperature`)**
+
+- **Récupérer la température intérieure actuelle**
+  - **Méthode** : `GET`
+  - **URL** : `/temperature/current`
+  - **Description** : Récupère la température intérieure actuelle.
+
+
