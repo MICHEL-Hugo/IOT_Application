@@ -12,7 +12,6 @@
     1. [Prérequis](#prérequis)
     2. [Étapes d'installation](#étapes-dinstallation)
 6. [Exemple de cas d'utilisation](#exemple-de-cas-dutilisation)
-7. [Licence](#licence)
 
 ---
 
@@ -30,20 +29,20 @@ L'application est composée des composants suivants :
 
 ### Microservices
 
-1. **Service de décision** : Le service principal qui évalue les données de température et prend des décisions concernant l'état des fenêtres (ouvertes/fermées).
-2. **Services de capteurs** : Deux services simulant des capteurs de température externes et internes, fournissant des données de température en temps réel.
-3. **Service d'actionneur** : Contrôle l'état des fenêtres (ouvertes ou fermées).
-4. **Service de découverte** : Permet à l'application de découvrir et d'enregistrer dynamiquement les services.
-5. **Service de configuration** : Gère les paramètres de configuration du système, tels que les seuils de température et les paramètres du système.
+1. **Service de décision(decisionMS)** : Le service principal qui évalue les données de température et prend des décisions concernant l'état des fenêtres (ouvertes/fermées).
+2. **Services de capteurs(inside/outsideTemperatureMS)** : Deux services simulant des capteurs de température externes et internes fournissant des données de température en temps réel.
+3. **Service d'actionneur(windowActuatorMS)** : Contrôle l'état des fenêtres (ouvertes ou fermées).
+4. **Service de découverte(discovery)** : Permet à l'application de découvrir et d'enregistrer dynamiquement les services.
+5. **Service de configuration(configuration)** : Gère les paramètres de configuration du système, tels que les ports et la connexion à la base de données.
 
 ### Capteurs
 
-1. **Capteur de température extérieur** : Fournit la température extérieure actuelle via une API REST.
-2. **Capteur de température intérieur** : Fournit la température intérieure actuelle via une API REST.
+1. **Capteur de température extérieur** : Fournit une valeure de température extérieure actuelle, disponible via une API REST. Ces données sont simulées et issues du fichier [temperatures.json](https://github.com/MICHEL-Hugo/IOT_Application/blob/main/insideTemperatureMS/src/main/resources/temperatures.json).
+2. **Capteur de température intérieur** : Fournit une valeure de température intérieure actuelle,disponible via une API REST. Ces données sont simulées et issues du fichier [temperatures.json](https://github.com/MICHEL-Hugo/IOT_Application/blob/main/outsideTemperatureMS/src/main/resources/temperatures.json).
 
 ### Base de données
 
-La base de données stocke les journaux des relevés de température et des changements d'état des fenêtres. Chaque entrée comprend :
+La base de données stocke les journaux relatant des changements d'état des fenêtres. Chaque entrée comprend :
 - **Horodatage** : Date et heure de l'entrée.
 - **Température extérieure** : Température à l'extérieur de la pièce.
 - **Température intérieure** : Température à l'intérieur de la pièce.
@@ -66,9 +65,9 @@ Le cas d'usage qui pilote ce système est le suivant :
 
 - **Spring Boot** : Framework utilisé pour la création des microservices.
 - **Spring Cloud** : Pour la découverte et la communication entre les services.
-- **Spring JDBC** : Pour interagir avec la base de données et gérer les entrées de journaux.
+- **Spring JDBC** : Pour interagir avec la base de données.
 - **API RESTful** : Communication entre les microservices.
-- **Base de données** : Base de données relationnelle (par exemple, MySQL) pour stocker les journaux.
+- **Base de données** : Base de données relationnelle pour stocker les logs.
 
 ---
 
@@ -78,10 +77,9 @@ Le cas d'usage qui pilote ce système est le suivant :
 
 Pour exécuter cette application, vous aurez besoin des éléments suivants :
 - Java 11 ou version supérieure.
-- Maven ou Gradle pour la gestion des dépendances.
+- [Eclipse IDE for Enterprise Java and Web Developers](https://www.eclipse.org/downloads/packages/release/2021-03/r/eclipse-ide-enterprise-java-and-web-developers)
 - Une instance en cours d'exécution de MySQL ou d'une autre base de données relationnelle (si vous utilisez une autre base de données, ajustez la configuration en conséquence).
-- Docker (optionnel) pour la conteneurisation.
-
+- 
 ### Étapes d'installation
 
 1. **Clonez le repository** :
@@ -89,25 +87,43 @@ Pour exécuter cette application, vous aurez besoin des éléments suivants :
     git clone https://github.com/yourusername/your-repo.git
     cd your-repo
     ```
+2. **Configurez la base de données** :
+   - Assurez-vous que votre base de données fonctionne.  
+   - Assurez-vous que votre base de données fonctionne, et configurez les paramètres de connexion dans le fichier [`decisionMS.properties`](https://github.com/MICHEL-Hugo/IOT_Application/blob/main/decisionMS.properties).
+     
+3. **Initialisez le workspace dans Eclipse**
+ Ouvrez Eclipse et créez un nouveau workspace dans le répertoire cloné :  
+   - **File > Switch Workspace > Other**  
+   - Sélectionnez le répertoire cloné comme nouveau workspace et cliquez sur **Launch**.  
+   Importez les microservices dans Eclipse :  
+   - **File > Import > Existing Maven Projects**.  
+   - Parcourez chaque dossier de microservice dans le repository, sélectionnez-les et cliquez sur **Finish**.  
+   
 
-2. **Construisez l'application** :
-    Si vous utilisez Maven :
-    ```bash
-    mvn clean install
-    ```
-    Si vous utilisez Gradle :
-    ```bash
-    gradle build
-    ```
+4. **Exécutez les services dans l'ordre**
 
-3. **Exécutez les services** :
-   - Vous pouvez démarrer chaque service individuellement en utilisant les commandes de Spring Boot, ou utiliser Docker Compose pour démarrer tous les services en même temps si vous avez un fichier `docker-compose.yml`.
+   **Service de découverte** :  
+   - Accédez au dossier `src/main/java` du projet de service de découverte.  
+   - Faites un clic droit sur le fichier principal contenant la méthode `main` (souvent nommé `Application` ou similaire).  
+   - Cliquez sur **Run As > Java Application**.  
 
-4. **Configurez la base de données** :
-   - Assurez-vous que votre base de données fonctionne, et configurez les paramètres de connexion dans le fichier `application.properties` (ou `application.yml`).
+   **Service de configuration** :  
+   - Répétez les mêmes étapes que ci-dessus pour lancer le service de configuration.  
 
-5. **Accédez à l'application** :
-   - Une fois que tout est en cours d'exécution, vous pouvez interagir avec le système en utilisant les points d'entrée REST fournis.
+   **Autres microservices** :  
+   - Lancez les autres microservices un par un en suivant la même procédure.  
+
+
+ 5. **Accédez à l'application**
+    - Pour effectuer des requêtes **GET**, vous pouvez utiliser un navigateur web en saisissant l'URL appropriée (par exemple : `http://localhost:8080/{endpoint}`).  
+    - Pour d'autres types de requêtes (POST, PUT, DELETE), utilisez un outil comme [**Postman**](https://www.postman.com/downloads/) :  
+      - Configurez vos requêtes avec l'URL, le corps de la requête, les en-têtes, etc.  
+      - Envoyez les requêtes et vérifiez les réponses des services.
+    
+    **Observation du fonctionnement de l'application**
+    - Le fonctionnement global de l'application peut être observé via :  
+        - Les **logs** stockées sur la base de données.  
+        - La **console du service de décision**, qui reflète l'état et les interactions des différents services.  
 
 ---
 
@@ -122,8 +138,3 @@ Pour exécuter cette application, vous aurez besoin des éléments suivants :
 3. **Arrêter la surveillance** :
    - Envoyez une requête POST à `/decision/stop` pour arrêter la surveillance.
 
----
-
-## Licence
-
-Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
